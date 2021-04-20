@@ -69,11 +69,15 @@ const Points = () => {
         return;
       }
 
+      try{
+
       const location = await Location.getCurrentPositionAsync();
 
       const { latitude, longitude } = location.coords;
 
       setInitialPosition([latitude, longitude]);
+    }catch{}
+    
     }
 
     loadPosition();
