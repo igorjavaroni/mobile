@@ -44,11 +44,11 @@ const Points = () => {
   useEffect(() => {
     async function loadPosition() {
       
-      const { status } = await Location.requestPermissionsAsync();
+      const { status } = await Location.requestForegroundPermissionsAsync();
 
       if(status !== 'granted')
       {
-        Alert.alert('Oooops!', 'Precisamos de sua permissão para obter a localização!');
+        Alert.alert('Ops','Não identificamos a sua localização!'); 
         return;
       }
 
@@ -59,7 +59,7 @@ const Points = () => {
       setInitialPosition([
         latitude,
         longitude
-      ])
+      ]);
 
     }
 

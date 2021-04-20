@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, ImageBackground, Image, StyleSheet, Text, Touchable, TextInput, KeyboardAvoidingView, Platform} from 'React-native';
+import { View, ImageBackground, Image, StyleSheet, Text, Touchable, TextInput, KeyboardAvoidingView, Platform} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import { Feather as Icon} from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native'
