@@ -128,8 +128,7 @@ const Points = () => {
                 longitude: initialPosition[1],
                 latitudeDelta: 0.014,
                 longitudeDelta: 0.014,
-              }}
-            >
+              }}>
               {points.map((point) => (
                 <Marker
                   key={point.id}
