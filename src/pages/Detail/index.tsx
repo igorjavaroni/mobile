@@ -47,13 +47,12 @@ setData(response.data);
     mailComposer.composeAsync({
       subject: 'Interesse na coleta de resíduos',
       recipients: [data.point.email],
-
-
+      body: 'Prezados, tenho interesse na coleta dos resíduos oferecidos pelo seu ponto!',
     })
   }
 
   function handleWhatsapp(){
-    Linking.openURL(`whatsapp://send?phone=${data.point.whatsapp}&text=Tenho interesse sobre coleta de resíduos`)
+    Linking.openURL(`whatsapp://send?phone=${data.point.whatsapp}&text=Tenho interesse sobre coleta de resíduos do seu ponto!`)
   }
 
   if(!data.point){
