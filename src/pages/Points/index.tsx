@@ -44,15 +44,12 @@ const Points = () => {
   const routeParams = route.params as Params;
 
   const [items, setItems] = useState<Item[]>([]);
-  const [initialPosition, setInitialPosition] = useState<[number, number]>([
-    0,
-    0,
-  ]);
+  const [initialPosition, setInitialPosition] = useState<[number, number]>([0, 0]);
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [points, setPoints] = useState<Point[]>([]);
 
   useEffect(() => {
-    api.get("/items").then((response) => {
+    api.get('items').then((response) => {
       setItems(response.data);
     });
   }, []);
@@ -61,10 +58,10 @@ const Points = () => {
     async function loadPosition() {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
-      if (status !== "granted") {
+      if (status !== 'granted') {
         Alert.alert(
           "Ops!",
-          "Precisamos de sua permissão para obeter a localização"
+          "Precisamos de sua permissão para obter a localização"
         );
         return;
       }
@@ -84,8 +81,7 @@ const Points = () => {
   }, []);
 
   useEffect(() => {
-    api
-      .get("/points", {
+    api.get('points', {
         params: {
           city: routeParams.city,
           uf: routeParams.uf,
@@ -98,7 +94,7 @@ const Points = () => {
   }, [selectedItems]);
 
   function handleNavigateToDetail(id: number) {
-    navigation.navigate("Detail", { point_id: id });
+    navigation.navigate('Detail', { point_id: id });
   }
 
   function handleSelectItem(id: number) {
@@ -133,9 +129,19 @@ const Points = () => {
                 longitude: initialPosition[1],
                 latitudeDelta: 0.014,
                 longitudeDelta: 0.014,
-              }}
-            >
+
+              }}>
+               <Marker
+                  key={0}
+                  style={styles.mapMarker}                  
+                  coordinate={{
+                    latitude: initialPosition[0],
+                    longitude: initialPosition[1],
+                  }}>                  
+                </Marker>  
+
               {points.map((point) => (
+                
                 <Marker
                   key={point.id}
                   style={styles.mapMarker}
@@ -148,9 +154,7 @@ const Points = () => {
                   <View style={styles.mapMarkerContainer}>
                     <Image
                       style={styles.mapMarkerImage}
-                      source={{
-                        uri: point.image_url,
-                      }}
+                      source={{uri: point.image,}}
                     />
                     <Text style={styles.mapMarkerTitle}>{point.name}</Text>
                   </View>
@@ -167,15 +171,10 @@ const Points = () => {
           contentContainerStyle={{ paddingHorizontal: 20 }}
         >
           {items.map((item) => (
-            <TouchableOpacity
-              key={String(item.id)}
-              style={[
-                styles.item,
-                selectedItems.includes(item.id) ? styles.selectedItem : {},
-              ]}
-              activeOpacity={0.6}
-              onPress={() => handleSelectItem(item.id)}
-            >
+            <TouchableOpacity key={String(item.id)} 
+            style={[styles.item, selectedItems.includes(item.id) ? styles.selectedItem : {},]} 
+            activeOpacity={0.6}
+            onPress={() => handleSelectItem(item.id)}>
               <SvgUri width={42} height={42} uri={item.image_url} />
               <Text style={styles.itemTitle}>{item.title}</Text>
             </TouchableOpacity>

@@ -16,8 +16,8 @@ import { useNavigation } from "@react-navigation/native";
 const Home = () => {
   const navigation = useNavigation();
 
-  const [uf, setUf] = useState("");
-  const [city, setCity] = useState("");
+  const [uf, setUf] = useState('');
+  const [city, setCity] = useState('');
 
   function handleNavigationToPoints() {
     navigation.navigate("Points", { uf, city });
@@ -25,9 +25,9 @@ const Home = () => {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : undefined}
+      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       style={{ flex: 1 }}
-    >
+      >
       <ImageBackground
         source={require("../../assets/home-background.png")}
         style={styles.container}
