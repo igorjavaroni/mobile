@@ -49,9 +49,10 @@ const Points = () => {
   const [points, setPoints] = useState<Point[]>([]);
 
   useEffect(() => {
-    api.get('items').then((response) => {
-      setItems(response.data);
-    });
+    console.log(routeParams)
+    api.get('items').then(response => {
+        setItems(response.data);
+    })
   }, []);
 
   useEffect(() => {
@@ -109,7 +110,7 @@ const Points = () => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>      
       <View style={styles.container}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <Icon name="arrow-left" color="#34cb79" size={20} />
@@ -140,8 +141,7 @@ const Points = () => {
                   }}>                  
                 </Marker>  
 
-              {points.map((point) => (
-                
+              {points.map((point) => (                
                 <Marker
                   key={point.id}
                   style={styles.mapMarker}
@@ -173,7 +173,6 @@ const Points = () => {
           {items.map((item) => (
             <TouchableOpacity key={String(item.id)} 
             style={[styles.item, selectedItems.includes(item.id) ? styles.selectedItem : {},]} 
-            activeOpacity={0.6}
             onPress={() => handleSelectItem(item.id)}>
               <SvgUri width={42} height={42} uri={item.image_url} />
               <Text style={styles.itemTitle}>{item.title}</Text>
@@ -226,23 +225,24 @@ const styles = StyleSheet.create({
   },
 
   mapMarkerContainer: {
-    width: 90,
-    height: 70,
+    flex: 1,
+    width: 80,
+    height: 150,
     backgroundColor: "#34CB79",
     flexDirection: "column",
-    borderRadius: 8,
+    borderRadius: 10,
     overflow: "hidden",
-    alignItems: "center",
+    alignItems: "flex-start",
   },
 
   mapMarkerImage: {
-    width: 90,
-    height: 45,
+    flex: 1,
+    width: 0,
+    height: 0,
     resizeMode: "cover",
   },
 
-  mapMarkerTitle: {
-    flex: 1,
+  mapMarkerTitle: {    
     fontFamily: "Roboto_400Regular",
     color: "#FFF",
     fontSize: 13,
@@ -252,7 +252,7 @@ const styles = StyleSheet.create({
   itemsContainer: {
     flexDirection: "row",
     marginTop: 16,
-    marginBottom: 32,
+    marginBottom: 32
   },
 
   item: {
@@ -268,7 +268,6 @@ const styles = StyleSheet.create({
     marginRight: 8,
     alignItems: "center",
     justifyContent: "space-between",
-
     textAlign: "center",
   },
 

@@ -19,7 +19,7 @@ export default function App() {
 
   return (
     <>
-    <StatusBar barStyle="dark-content" backgroundColor="Transparent" translucent/>
+    <StatusBar translucent={true} backgroundColor={'transparent'}/>
     <Routes />
     </>
   );

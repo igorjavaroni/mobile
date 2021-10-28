@@ -12,16 +12,37 @@ import {
 import { RectButton } from "react-native-gesture-handler";
 import { Feather as Icon } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import DropDownPicker from 'react-native-dropdown-picker';
+import axios from 'axios';
 
 const Home = () => {
+  
   const navigation = useNavigation();
-
-  const [uf, setUf] = useState('');
   const [city, setCity] = useState('');
+  const [open, setOpen] = useState(false);
+  const [uf, setSelectedUF] = useState(null);
+
+  const [ufs, setUfs] = useState([{label: 'AC', value: 'AC'}, {label: 'AL', value: 'AL'}, {label: 'AP', value: 'AP'}, {label: 'AM', value: 'AM'}, {label: 'BA', value: 'BA'}, 
+    {label: 'CE', value: 'CE'}, {label: 'DF', value: 'DF'}, {label: 'ES', value: 'ES'}, {label: 'GO', value: 'GO'}, {label: 'MA', value: 'MA'}, {label: 'MT', value: 'MT'}, 
+    {label: 'MS', value: 'MS'}, {label: 'MG', value: 'MG'}, {label: 'PA', value: 'PA'}, {label: 'PB', value: 'PB'}, {label: 'PR', value: 'PR'}, {label: 'PE', value: 'PE'}, 
+    {label: 'PI', value: 'PI'}, {label: 'RJ', value: 'RJ'}, {label: 'RN', value: 'RN'}, {label: 'RS', value: 'RS'}, {label: 'RO', value: 'RO'}, {label: 'RR', value: 'RR'}, 
+    {label: 'SC', value: 'SC'}, {label: 'SP', value: 'SP'}, {label: 'SE', value: 'SE'}, {label: 'TO', value: 'TO'}
+  ]);
 
   function handleNavigationToPoints() {
+    console.log(uf);
     navigation.navigate("Points", { uf, city });
   }
+
+  const checkTextInput = () => {
+    //Check for the Name TextInput
+    if (!city.trim()) {
+      alert('Digite a cidade desejada');
+      return false;
+    }
+    else
+      return true;
+  };
 
   return (
     <KeyboardAvoidingView
@@ -47,24 +68,33 @@ const Home = () => {
         </View>
 
         <View style={styles.footer}>
-          <TextInput
-            style={styles.input}
-            placeholder="Digite a UF"
-            maxLength={2}
-            autoCapitalize="characters"
-            value={uf}
-            autoCorrect={false}
-            onChangeText={setUf}
-          />
+          
+        <DropDownPicker
+          style={styles.input}
+          placeholder = 'Selecione uma UF'
+          open={open}
+          value={uf}
+          items={ufs}
+          setOpen={setOpen}
+          setValue={setSelectedUF}
+          setItems={setUfs}        
+        /> 
+
           <TextInput
             style={styles.input}
             placeholder="Digite a Cidade"
             autoCorrect={false}
             value={city}
-            onChangeText={setCity}
+            onChangeText={setCity}            
           />
 
-          <RectButton style={styles.button} onPress={handleNavigationToPoints}>
+          <RectButton style={styles.button} onPress={ () => {
+              if(checkTextInput())
+              {
+                console.log('help-me');
+                handleNavigationToPoints() 
+              }
+            }}>
             <View style={styles.buttonIcon}>
               <Text>
                 <Icon name="arrow-right" color="#FFF" size={24} />
@@ -116,6 +146,7 @@ const styles = StyleSheet.create({
     height: 60,
     backgroundColor: "#FFF",
     borderRadius: 10,
+    borderColor: "#FFF",
     marginBottom: 8,
     paddingHorizontal: 24,
     fontSize: 16,
